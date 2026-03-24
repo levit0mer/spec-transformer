@@ -32,3 +32,6 @@ export * from './src/io/reader/YamlReader';
 export * from './src/io/writer/Writer';
 export * from './src/io/writer/JsonWriter';
 export * from './src/io/writer/YamlWriter';
+
+export * from './src/diff/SpecDiffReporter';
+export * from './src/diff/types';
