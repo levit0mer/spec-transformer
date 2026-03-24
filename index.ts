@@ -21,6 +21,7 @@ export * from './src/transformer/OneOfSettingTransformer';
 export * from './src/transformer/PostmanTransformer';
 export * from './src/transformer/TagsSettingTransformer';
 export * from './src/transformer/OperationIdsToTagsTransformer';
+export * from './src/transformer/ComponentPruningTransformer';
 
 export * from './src/facade/TransformerChain';
 
