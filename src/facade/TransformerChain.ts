@@ -16,7 +16,7 @@
 
 import Reader from '../io/reader/Reader';
 import Writer from '../io/writer/Writer';
-import Transformer from '../transformer/Transformer';
+import Transformer, { AsyncTransformer } from '../transformer/Transformer';
 import { Key, Value } from '../model/Types';
 
 /**
@@ -27,9 +27,9 @@ import { Key, Value } from '../model/Types';
  * @param transformers Transformers to use for transforming the specs.
  */
 export class TransformerChain {
-  transformers: Transformer[];
+  transformers: (Transformer | AsyncTransformer)[];
 
-  constructor(transformers: Transformer[]) {
+  constructor(transformers: (Transformer | AsyncTransformer)[]) {
     this.transformers = transformers;
   }
 
@@ -42,7 +42,7 @@ export class TransformerChain {
    */
   transform(specs: string, reader: Reader, writer: Writer): string {
     return writer.write(
-      this.transformers.reduce(
+      this.getSyncTransformers().reduce(
         (acc: Record<Key, Value>, transformer: Transformer) => transformer.transform(acc),
         reader.read(specs)
       )
@@ -55,9 +55,34 @@ export class TransformerChain {
    * @param specs The specs to transform as a Record.
    */
   transformRecord(specs: Record<Key, Value>): Record<Key, Value> {
-    return this.transformers.reduce(
+    return this.getSyncTransformers().reduce(
       (acc: Record<Key, Value>, transformer: Transformer) => transformer.transform(acc),
       specs
     );
+  }
+
+  /**
+   * Transforms the specs using all transformers, supporting both sync and async.
+   *
+   * @param specs The specs to transform as a Record.
+   */
+  async transformRecordAsync(specs: Record<Key, Value>): Promise<Record<Key, Value>> {
+    let result = specs;
+    for (const transformer of this.transformers) {
+      if (this.isAsyncTransformer(transformer)) {
+        result = await transformer.transformAsync(result);
+      } else {
+        result = (transformer as Transformer).transform(result);
+      }
+    }
+    return result;
+  }
+
+  private isAsyncTransformer(t: Transformer | AsyncTransformer): t is AsyncTransformer {
+    return 'transformAsync' in t;
+  }
+
+  private getSyncTransformers(): Transformer[] {
+    return this.transformers.filter((t): t is Transformer => 'transform' in t);
   }
 }

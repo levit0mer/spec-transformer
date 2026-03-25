@@ -22,6 +22,11 @@ export * from './src/transformer/PostmanTransformer';
 export * from './src/transformer/TagsSettingTransformer';
 export * from './src/transformer/OperationIdsToTagsTransformer';
 export * from './src/transformer/ComponentPruningTransformer';
+export * from './src/transformer/ExternalRefResolverTransformer';
+
+export * from './src/io/resolver/RefResolver';
+export * from './src/io/resolver/RefCache';
+export * from './src/io/resolver/types';
 
 export * from './src/facade/TransformerChain';
 

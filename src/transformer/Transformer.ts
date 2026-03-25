@@ -27,3 +27,16 @@ export default interface Transformer {
    */
   transform(specs: Record<Key, Value>): Record<Key, Value>;
 }
+
+/**
+ * An async transformer interface for transformers that need to perform
+ * I/O operations (e.g., resolving external $ref URLs).
+ */
+export interface AsyncTransformer {
+  /** Transform the specs asynchronously.
+   *
+   * @param specs The specs to transform
+   * @returns A promise resolving to the transformed specs
+   */
+  transformAsync(specs: Record<Key, Value>): Promise<Record<Key, Value>>;
+}
