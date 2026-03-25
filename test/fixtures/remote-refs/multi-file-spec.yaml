@@ -1,0 +1,40 @@
+openapi: "3.0.3"
+info:
+  title: Test Multi-File Spec
+  version: 1.0.0
+  description: A spec with external $ref references for testing ExternalRefResolverTransformer
+paths:
+  /orders:
+    get:
+      summary: List orders
+      parameters:
+        - $ref: 'https://api-schemas.playmobility.dev/common/v2/headers.yaml#/components/parameters/X-Request-Id'
+        - $ref: 'https://api-schemas.playmobility.dev/common/v2/headers.yaml#/components/parameters/X-Correlation-Id'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'https://api-schemas.playmobility.dev/booking/v2/schemas.yaml#/components/schemas/BookingList'
+  /orders/{id}:
+    get:
+      summary: Get order by ID
+      parameters:
+        - $ref: 'https://api-schemas.playmobility.dev/common/v2/headers.yaml#/components/parameters/X-Request-Id'
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'https://api-schemas.playmobility.dev/booking/v2/schemas.yaml#/components/schemas/Booking'
