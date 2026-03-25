@@ -13,7 +13,8 @@
   },
   "scripts": {
     "add-headers": "scripts/add-headers.sh",
-    "build": "rm -rf dist && npx tsc --pretty && rm -rf dist/test && cp package.json dist/package.json && cp README.md dist/README.md && cp LICENSE dist/LICENSE && cp CONTRIBUTING.md dist/CONTRIBUTING.md && cp .releaserc.json dist/.releaserc.json && ts-node examples/verify-build.ts",
+    "build": "rm -rf dist && npx tsc --pretty && rm -rf dist/test && cp package.json dist/package.json && cp README.md dist/README.md && cp LICENSE dist/LICENSE && cp CONTRIBUTING.md dist/CONTRIBUTING.md && cp .releaserc.json dist/.releaserc.json",
+    "postbuild": "ts-node examples/verify-build.ts",
     "start": "ts-node index.ts",
     "test": "jest",
     "example:resolve": "ts-node examples/resolve-external-refs.ts",
