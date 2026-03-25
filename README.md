@@ -4,7 +4,21 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Build](https://img.shields.io/github/actions/workflow/status/ExpediaGroup/spec-transformer/release.yml?branch=main)](https://github.com/ExpediaGroup/spec-transformer/actions)
 
-Maintained by [Mohammad Noor](https://github.com/mohnoor94) | [Expedia Group](https://github.com/ExpediaGroup)
+This is a fork of [ExpediaGroup/spec-transformer](https://github.com/ExpediaGroup/spec-transformer), built by [Mohammad Noor](https://github.com/mohnoor94) (huge thanks!).
+I found it super useful and decided to add a few additional transformers:
+
+- **ComponentPruningTransformer** - removes orphaned component definitions left behind after header/path removal
+- **ExternalRefResolverTransformer** - resolves external `$ref` URLs and bundles everything into a self-contained spec
+- **SpecDiffReporter** - compares before/after specs and outputs a structured change report
+
+```bash
+git clone https://github.com/levit0mer/spec-transformer.git
+cd spec-transformer
+npm install
+npm test
+```
+
+---
 
 A composable pipeline for transforming OpenAPI 3.0 specifications.
 
